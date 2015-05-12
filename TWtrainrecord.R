@@ -14,7 +14,7 @@ rowdata2 <- strsplit(rowdata,split = "script")
 
 Train <- paste(rowdata2[[1]][10],rowdata2[[1]][12])
 
-## clearn  Uptrain Data
+## clearn  Train Data
 Train2 <- gsub(pattern = "TRSearchResult\\.push\\(\\'","",Train)
 Train3 <- gsub(pattern = "\\'\\)","",Train2)
 Train4 <- gsub(pattern = ">","",Train3)
@@ -34,4 +34,4 @@ Finalupdata <- rbind(Finalupdata,Traindataframe2)
 #Name, Up is 0, Dowm is 0
 colnames(Finalupdata) <- c("Type","Number","Time","Destination","Up/Down","delaytime")
 
-Finalupdata
+Finaldata
