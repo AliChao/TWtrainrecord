@@ -1,6 +1,7 @@
 library(RCurl)
 # date and station setting
-date <- gsub(pattern = "\\-","\\/",Sys.Date())
+date <- 2015/05/13
+##date <- gsub(pattern = "\\-","\\/",Sys.Date())
 station <-1228
 url <-character()
 urlfunction<- function(date,station){
@@ -27,11 +28,11 @@ Traindataframe <- as.data.frame(Traindatamatix)
 # change the V3 to time frame
 Traindataframe$V3 <- strptime(Traindataframe$V3,"%H:%M",tz = "Asia/Taipei")
 #delete the future time
-Traindataframe2 <-Traindataframe[Traindataframe$V3 > Sys.time(),]
+Traindataframe2 <-Traindataframe[Traindataframe$V3 < Sys.time(),]
 #collect data
-Finalupdata <- data.frame()
-Finalupdata <- rbind(Finalupdata,Traindataframe2)
-#Name, Up is 0, Dowm is 0
-colnames(Finalupdata) <- c("Type","Number","Time","Destination","Up/Down","delaytime")
+Finaldata <- data.frame()
+Finaldata <- rbind(Finaldata,Traindataframe2)
+#Name, Up is 0, Dowm is 1
+colnames(Finaldata) <- c("Type","Number","Time","Destination","Up/Down","delaytime")
 
 Finaldata
