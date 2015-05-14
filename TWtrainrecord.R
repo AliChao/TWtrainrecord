@@ -1,7 +1,11 @@
+#call packages 
 library(RCurl)
+library(lubridate)
 # date and station setting
-date <- 2015/05/13
-##date <- gsub(pattern = "\\-","\\/",Sys.Date())
+TaiwanTime <- as.POSIXlt (Sys.time(),tz ="Asia/Taipei")
+TaiwanDate <- substr(TaiwanTime,1,10)
+date <- gsub(pattern = "\\-","\\/",TaiwanDate)
+
 station <-1228
 url <-character()
 urlfunction<- function(date,station){
@@ -30,9 +34,14 @@ Traindataframe$V3 <- strptime(Traindataframe$V3,"%H:%M",tz = "Asia/Taipei")
 #delete the future time
 Traindataframe2 <-Traindataframe[Traindataframe$V3 < Sys.time(),]
 #collect data
-Finaldata <- data.frame()
+##Finaldata <- data.frame()
+#call dataframe record.csv
+Finaldata <- read.table("record1228.CSV",header = TRUE, sep = ",",encoding = "UTF-8")
+# conbine new data in
 Finaldata <- rbind(Finaldata,Traindataframe2)
 #Name, Up is 0, Dowm is 1
-colnames(Finaldata) <- c("Type","Number","Time","Destination","Up/Down","delaytime")
+##colnames(Finaldata) <- c("Type","Number","Time","Destination","Up/Down","delaytime")
 
+write.table(Finaldata, file = "record1228.CSV", sep = ",")
 Finaldata
+
