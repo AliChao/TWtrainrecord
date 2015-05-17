@@ -46,5 +46,5 @@ Finaldata3 <- rbind(Finaldata2,Traindataframe2)
 #Name, Up is 0, Dowm is 1
 colnames(Finaldata3) <- c("Type","Number","Time","Destination","Up/Down","delaytime")
 
-Finaldata
+write.table(Finaldata3, file = "record1228.CSV", sep = ",")
 
