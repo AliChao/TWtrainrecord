@@ -1,6 +1,5 @@
 #call packages 
 library(RCurl)
-library(lubridate)
 # date and station setting
 TaiwanTime <- as.POSIXlt (Sys.time(),tz ="Asia/Taipei")
 TaiwanDate <- substr(TaiwanTime,1,10)
@@ -33,15 +32,19 @@ Traindataframe <- as.data.frame(Traindatamatix)
 Traindataframe$V3 <- strptime(Traindataframe$V3,"%H:%M",tz = "Asia/Taipei")
 #delete the future time
 Traindataframe2 <-Traindataframe[Traindataframe$V3 < Sys.time(),]
-#collect data
-##Finaldata <- data.frame()
-#call dataframe record.csv
-Finaldata <- read.table("record1228.CSV",header = TRUE, sep = ",",encoding = "UTF-8")
-# conbine new data in
-Finaldata <- rbind(Finaldata,Traindataframe2)
-#Name, Up is 0, Dowm is 1
-##colnames(Finaldata) <- c("Type","Number","Time","Destination","Up/Down","delaytime")
 
-write.table(Finaldata, file = "record1228.CSV", sep = ",")
+#collect data
+#Finaldata <- data.frame()
+#call dataframe record.csv
+Finaldata <- read.table("record1228.CSV",header = T, sep = ",")#,encoding = "UTF-8"
+Finaldata2<-as.data.frame(Finaldata)
+Finaldata2$Time<- as.POSIXct(Finaldata2$Time,tz = "Asia/Taipei")
+
+# conbine new data in
+names(Traindataframe2)<-names(Finaldata2)
+Finaldata3 <- rbind(Finaldata2,Traindataframe2)
+#Name, Up is 0, Dowm is 1
+colnames(Finaldata3) <- c("Type","Number","Time","Destination","Up/Down","delaytime")
+
 Finaldata
 
